@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchAllOrders, updateOrderStatus } from '../api/admin';
+import { adminGetAllOrders,  adminGetDashboardStats,adminUpdateService} from '../api/admin';
 import OrderTable from '../components/admin/OrderTable';
 import ServiceManagement from '../components/admin/ServiceManagement';
 

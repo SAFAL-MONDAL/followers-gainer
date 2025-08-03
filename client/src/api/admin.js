@@ -1,5 +1,13 @@
 import apiClient from './apiClient';
-
+// Get all services
+export const adminGetAllServices = async () => {
+  try {
+    const response = await apiClient.get('/admin/services');
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'Failed to fetch services');
+  }
+};
 // Admin Services
 export const adminGetAllOrders = async () => {
   try {

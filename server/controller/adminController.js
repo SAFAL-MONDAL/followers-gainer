@@ -1,9 +1,9 @@
-const Order = require('../models/Orders');
 const Service = require('../models/Services');
+const Order = require('../models/Orders');
 const User = require('../models/User');
-const { ApiError } = require('../utils/apiResponse');
+const ApiResponse = require('../utils/apiResponse');
 
-// Get all orders (admin view)
+// Make sure all methods are exported like this:
 exports.getAllOrders = async (req, res, next) => {
   try {
     const orders = await Order.find().populate('user service');
@@ -13,7 +13,6 @@ exports.getAllOrders = async (req, res, next) => {
   }
 };
 
-// Update order status
 exports.updateOrderStatus = async (req, res, next) => {
   try {
     const { status } = req.body;
@@ -22,11 +21,11 @@ exports.updateOrderStatus = async (req, res, next) => {
       { status },
       { new: true }
     ).populate('service');
-
+    
     if (!order) {
       throw new ApiError(404, 'Order not found');
     }
-
+    
     res.status(200).json(order);
   } catch (err) {
     next(err);
@@ -43,7 +42,24 @@ exports.createService = async (req, res, next) => {
     next(new ApiError(400, 'Failed to create service'));
   }
 };
-
+// In adminController.js - make sure this exists
+exports.updateService = async (req, res, next) => {
+  try {
+    const service = await Service.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    
+    if (!service) {
+      throw new ApiError(404, 'Service not found');
+    }
+    
+    res.status(200).json(service);
+  } catch (err) {
+    next(err);
+  }
+};
 // Delete a service
 exports.deleteService = async (req, res, next) => {
   try {

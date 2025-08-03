@@ -33,6 +33,7 @@ function App() {
                                         <Route path="/order/:id" element={<Order />} />
                                         <Route path="/dashboard" element={<Dashboard />} />
                                         <Route path="/admin" element={<AdminDashboard />} />
+                                
                                     </Routes>
                                 </main>
                                 <Footer />
